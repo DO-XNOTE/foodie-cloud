@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>foodie-cloud</artifactId>
+        <groupId>com.imooc</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../../../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>foodie-order-service</artifactId>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>foodie-order-mapper</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--用户服务接口层-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>foodie-user-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!--订单服务接口层-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>foodie-order-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--商品依赖接口层-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>foodie-item-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!--需要在订单中心向服务中心用户中心的调用-->
+        <!--
+        TODO 学到feign后，就可有将下面的依赖移除掉了，feign可以通过服务接口直接发起调用
+         没有feign只能通过 eureka和loadbalance方式调用
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

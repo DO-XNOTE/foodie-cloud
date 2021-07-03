@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.imooc.item.mapper.ItemsMapperCustom" >
+    <select id="queryItemComments" parameterType="Map" resultType="com.imooc.item.pojo.vo.ItemCommentVO">
+        SELECT
+            ic.comment_level as commentLevel,
+            ic.content as content,
+            ic.sepc_name as specName,
+            ic.created_time as createdTime,
+            u.face as userFace,
+            u.nickname as nickname
+        FROM
+            items_comments ic
+        LEFT JOIN users u
+        ON  ic.user_id = u.id
+        WHERE
+            ic.item_id = #{paramsMap.itemId}
+        <if test=" paramsMap.level != null and paramsMap.level != '' ">
+            AND ic.comment_level = #{paramsMap.level}
+        </if>
+    </select>
+    <!--
+        <select id="searchItems" parameterType="Map" resultType="com.imooc.item.pojo.vo.SearchItemsVO">
+            SELECT
+                i.id as itemId,
+                i.item_name as itemName,
+                i.sell_counts as sellCounts,
+                ii.url as imgUrl,
+                tempSpec.price_discount as price
+            FROM
+                items i
+            LEFT JOIN
+                items_img ii
+            on
+                i.id = ii.item_id
+            LEFT JOIN (SELECT item_id,MIN(price_discount) as price_discount from items_spec GROUP BY item_id) tempSpec
+            on
+                i.id = tempSpec.item_id
+            WHERE
+                ii.is_main = 1
+            <if test=" paramsMap.keywords != null and paramsMap.keywords != '' ">
+                AND i.item_name like '%${paramsMap.keywords}%'
+            </if>
+            order by
+            <choose>
+                <when test=" paramsMap.sort == &quot;c&quot; ">
+                    i.sell_counts desc
+                </when>
+                <when test=" paramsMap.sort == &quot;p&quot; ">
+                    tempSpec.price_discount asc
+                </when>
+                <otherwise>
+                    i.item_name asc
+                </otherwise>
+            </choose>
+        </select>
+
+          %${paramsMap.keyWords}%:这里的模糊查询的传值，不能像之前那样，使用占位符，因为要把参数
+          传进去 原本的%#{paramsMap.keyWords}%
+          要变成 %${paramsMap.keywords}%
+
+          k:代表默认排序
+          c:根据销量排序
+          p:根据价格排序
+          这里的 k，c，p，在mybatis中无法识别，这里需要进行转义
+          <when test="paramsMap.sort == 'c' ">
+              i.sellCounts desc
+          </when>
+          <when test="paramsMap.sort == 'p' ">
+          使用 &quot; 转义 单引号
+      -->
+    <!--
+        <select id="searchItemsByThirdCat" parameterType="Map" resultType="com.imooc.pojo.vo.SearchItemsVO">
+            SELECT
+                i.id as itemId,
+                i.item_name as itemName,
+                i.sell_counts as sellCounts,
+                ii.url as imgUrl,
+                tempSpec.price_discount as price
+            FROM
+                items i
+            LEFT JOIN items_img ii on i.id = ii.item_id
+            LEFT JOIN (SELECT item_id,MIN(price_discount) as price_discount from items_spec GROUP BY item_id) tempSpec
+            on
+                i.id = tempSpec.item_id
+            WHERE
+                ii.is_main = 1
+            and
+                i.cat_id = #{paramsMap.catId}
+            order by
+            <choose>
+                <when test=" paramsMap.sort == &quot;c&quot; ">
+                    i.sell_counts desc
+                </when>
+                <when test=" paramsMap.sort == &quot;p&quot; ">
+                    tempSpec.price_discount asc
+                </when>
+                <otherwise>
+                    i.item_name asc
+                </otherwise>
+            </choose>
+        </select>
+
+        <select id="queryItemsSpecIds" parameterType="List" resultType="com.imooc.pojo.vo.ShopcartVO">
+            SELECT
+                t_items.id as itemId,
+                t_items.item_name as itemName,
+                t_items_img.url as itemImgUrl,
+                t_items_spec.id as specId,
+                t_items_spec.`name` as specName,
+                t_items_spec.price_discount as priceDiscount,
+                t_items_spec.price_normal as priceNormal
+            FROM
+                items_spec t_items_spec
+            LEFT JOIN
+                items t_items
+            ON
+                t_items.id = t_items_spec.item_id
+            LEFT JOIN
+                items_img t_items_img
+            ON
+                t_items_img.item_id = t_items.id
+            WHERE
+                t_items_img.is_main = 1
+            AND
+                t_items_spec.id IN
+                <foreach collection="paramsList" index="index" item="specId" open="(" separator="," close=")">
+                    #{specId}
+                </foreach>
+
+        </select>
+        -->
+   <!--
+    ('1','3','5')
+    collection:就是传入的list
+    index：就是循环的下标
+    item：循环的每一项起一个名字
+    open：开始的左括号
+    separator：中间分隔符号
+    close:结束的右括号
+    foreach：循环拼接
+    #{specId}：循环内部自动要拼接的内容 #{Java的字段名称}
+    -->
+
+    <update id="decreaseItemSpecStock">
+        update
+            items_spec
+        set
+            stock = stock - #{pendingCounts}
+        where
+            id = #{specId}
+        and
+            stock >= #{pendingCounts}
+    </update>
+<!--
+       乐观锁机制实现防止超卖
+
+       where
+            id = #{specId}
+        and
+            stock >= #{pendingCounts}
+        这里的条件没有到达，那我们可以抛出异常，在事务中，就会回滚数据（乐观锁）
+-->
+    
+</mapper>
