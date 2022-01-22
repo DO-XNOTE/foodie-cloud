@@ -10,9 +10,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>foodie-order-api</artifactId>
+    <artifactId>foodie-cart-api</artifactId>
 
-    <!--接口层是给其他微服务进行调用的，尽量保持纯净,别人在引用的时候，就不会发生大量的以来冲突“-->
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -21,22 +25,11 @@
         </dependency>
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>foodie-order-pojo</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <!--为什么需要web，因为我们需要提供基于http的微服务，注册到Eureka注册中心的微服务，所以要把自己的service
-        声明成一个个controller  -->
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- TODO Feign dependencies-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
+        <!--TODO Feign dependencies-->
     </dependencies>
+
 </project>

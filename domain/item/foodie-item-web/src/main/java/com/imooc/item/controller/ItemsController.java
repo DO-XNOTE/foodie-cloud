@@ -1,5 +1,6 @@
 package com.imooc.item.controller;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.imooc.controller.BaseController;
 import com.imooc.item.pojo.Items;
 import com.imooc.item.pojo.ItemsImg;
@@ -55,6 +56,10 @@ public class ItemsController extends BaseController {
         itemInfoVO.setItemImgList(itemImgList);
         itemInfoVO.setItemSpecList(itemSpecsList);
         itemInfoVO.setItemParams(itemParams);
+        /**谷歌的guawa中multimap使用可以简化代码*/
+       /** ArrayListMultimap<Object, Object> multimap = ArrayListMultimap.create();*/
+//        ArrayListMultimap<Object, Object> multimap = ArrayListMultimap.create();
+
         return IMOOCJSONResult.ok(itemInfoVO);
     }
 

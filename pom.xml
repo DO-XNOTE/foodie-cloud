@@ -17,7 +17,6 @@
         <module>domain/item/foodie-item-api</module>
         <module>domain/item/foodie-item-service</module>
         <module>domain/item/foodie-item-web</module>
-        <module>domian/user/foodie-user-pojo</module>
         <module>domain/user/foodie-user-pojo</module>
         <module>domain/user/foodie-user-mapper</module>
         <module>domain/user/foodie-user-api</module>
@@ -28,12 +27,9 @@
         <module>domain/order/foodie-order-api</module>
         <module>domain/order/foodie-order-service</module>
         <module>domain/order/foodie-order-web</module>
-        <module>domian/cart/foodie-cart-pojo</module>
-        <module>domain/shopcart/foodie-shopcart-pojo</module>
-        <module>domain/shopcart/foodie-shopcart-mapper</module>
-        <module>domain/shopcart/foodie-shopcart-api</module>
-        <module>domain/shopcart/foodie-shopcart-service</module>
-        <module>domain/shopcart/foodie-shopcart-web</module>
+        <module>domain/cart/foodie-cart-api</module>
+        <module>domain/cart/foodie-cart-service</module>
+        <module>domain/cart/foodie-cart-web</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -108,6 +104,13 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>
         </dependency>
+
+        <!--muitimap的使用-->
+        <!--<dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.1-jre</version>
+        </dependency>-->
     </dependencies>
 
     <build>

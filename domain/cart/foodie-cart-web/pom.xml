@@ -10,18 +10,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>foodie-order-web</artifactId>
+    <artifactId>foodie-cart-web</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>foodie-order-service</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>foodie-cloud-web-components</artifactId>
+            <artifactId>foodie-cart-service</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -29,22 +28,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-
-        <!--TODO 先暂时放在这里-->
-        <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter -->
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.16.7</version>
-        </dependency>
-
-<!--        feign依赖  openfeign-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
@@ -64,4 +48,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

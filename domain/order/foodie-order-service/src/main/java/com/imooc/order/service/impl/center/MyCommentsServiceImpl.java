@@ -1,9 +1,7 @@
 package com.imooc.order.service.impl.center;
 
-import com.github.pagehelper.PageHelper;
 import com.imooc.enums.YesOrNo;
 
-import com.imooc.item.pojo.vo.MyCommentVO;
 import com.imooc.order.mapper.OrderItemsMapper;
 import com.imooc.order.mapper.OrderStatusMapper;
 import com.imooc.order.mapper.OrdersMapper;
@@ -12,7 +10,7 @@ import com.imooc.order.pojo.OrderStatus;
 import com.imooc.order.pojo.Orders;
 import com.imooc.order.pojo.bo.center.OrderItemsCommentBO;
 import com.imooc.order.service.center.MyCommentsService;
-import com.imooc.pojo.PagedGridResult;
+import com.imooc.order.service.impl.fallback.itemservice.ItemCommentFallback;
 import com.imooc.service.BaseService;
 
 import org.n3r.idworker.Sid;
@@ -33,6 +31,7 @@ import java.util.Map;
  * @描述:
  * @Author
  */
+@SuppressWarnings("all")
 @Service
 public class MyCommentsServiceImpl extends BaseService implements MyCommentsService {
 
@@ -54,6 +53,11 @@ public class MyCommentsServiceImpl extends BaseService implements MyCommentsServ
 
     @Autowired
     private OrderStatusMapper orderStatusMapper;
+
+    @Autowired
+//    private ItemCommentsService itemCommentsService;   使用服务降级的服务
+    private ItemCommentFallback itemCommentFallback;
+
 
     @Autowired
     private Sid sid;
